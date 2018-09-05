@@ -1,0 +1,39 @@
+<ion-header>
+    <ion-navbar>
+        <span class="nav-title">客户</span>
+        <ion-buttons end>
+            <button ion-button icon-only (tap)="search()">
+                <i class="iconfont">
+                    &#xe673;
+                </i>
+            </button>
+            <button ion-button icon-only (tap)="add()">
+                <i class="iconfont">
+                    &#xe66c;
+                </i>
+            </button>
+        </ion-buttons>
+    </ion-navbar>
+    <ion-filter class="ion-filter" [ngClass]="{'ion-filter-ios':plt.is('ios'),'ion-filter-md':plt.is('android')}" (panelHidden)="filterHide($event)">
+    </ion-filter>
+</ion-header>
+<ion-content>
+    <ion-refresher (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content pullingIcon="arrow-round-down" pullingText="下拉刷新" refreshingText="刷新中..."></ion-refresher-content>
+    </ion-refresher>
+    <div class="no-result" *ngIf="clienteles.length==0&&currentPage!=1">
+        <div class="no-result-tag">
+            <img src="./assets/imgs/no-clientele.png" />
+            <p>未找到相关客户</p>
+            <button class="add-clientele" ion-button block round (tap)="add()">添加客户</button>
+        </div>
+    </div>
+    <ion-list class="clientele-list">
+        <clientele-item (details)="itemDetails($event)" (delete)="itemDelete($event)" (remind)="itemRemind($event)" *ngFor="let item of clienteles;let i = index" (allot)="itemAllot($event)" [showOnwer]="globalData.user.type == 'COMPANY'"
+            [data]="item" [index]="i" [detail]="detail"></clientele-item>
+    </ion-list>
+    <p class="no-more" *ngIf="isHasNext&&clienteles.length!=0">没有更多了</p>
+    <ion-infinite-scroll (ionInfinite)="loadMore($event)" *ngIf="isHasNext">
+        <ion-infinite-scroll-content loadingText="加载更多..."></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+</ion-content>

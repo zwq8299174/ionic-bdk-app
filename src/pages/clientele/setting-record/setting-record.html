@@ -1,0 +1,54 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>{{postil?'跟进记录批注':followId?'查看跟进记录':'写入跟进记录'}}</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content>
+    <form #settingRecordForm="ngForm" class="setting-record-form full-form" novalidate>
+        <clientele-item *ngIf="remind?.customer" [data]="remind.customer"></clientele-item>
+        <remind-item *ngIf="remind" [view]="true" [remind]="remind"></remind-item>
+        <ion-list class="form-input-wrapper" [ngClass]="{'no-remind': !remind}">
+            <ion-item-group>
+                <ion-item *ngIf="!remind" [ngClass]="{'invalid':(settingRecordForm.controls?.title?.touched || settingRecordForm.submitted) && settingRecordForm.controls?.title.invalid}">
+                    <ion-label>提醒标题</ion-label>
+                    <ion-input name="title" maxlength="15" [disabled]="followId!==undefined" [(ngModel)]="formData.title" required placeholder="请输入标题"></ion-input>
+                </ion-item>
+                <info-input [ngClass]="{'invalid':(settingRecordForm.controls?.content?.touched || settingRecordForm.submitted) && settingRecordForm.controls?.content.invalid}"
+                    [disabled]="followId!==undefined" [(ngModel)]="infoContent" required #infoInput
+                    (inputFoucs)="openInputPanel()" (inputBlur)="hideInputPanel()" name="content" (voiceBarClick)="voiceBarClick()"></info-input>
+                <ion-item *ngIf="followId===undefined">
+                    <ion-label>下次跟进提醒</ion-label>
+                    <ion-toggle name="nextFollowRemind" [(ngModel)]="nextFollowRemind"></ion-toggle>
+                </ion-item>
+            </ion-item-group>
+            <ion-item-group class="next-follow-remind" *ngIf="nextFollowRemind">
+                <ion-item [ngClass]="{'invalid':(settingRecordForm.controls.nextTitle?.touched || settingRecordForm.submitted) && settingRecordForm.controls.nextTitle.invalid}">
+                    <ion-label>提醒标题</ion-label>
+                    <ion-input name="nextTitle" maxlength="15" [disabled]="followId!==undefined" [(ngModel)]="formData.nextTask.title" required
+                        placeholder="请输入提醒标题"></ion-input>
+                </ion-item>
+                <button ion-item [ngClass]="{'invalid':(settingRecordForm.controls.time?.touched || settingRecordForm.submitted) && settingRecordForm.controls.time.invalid}">
+                    <ion-label>下次提醒时间</ion-label>
+                    <ion-datetime name="time" [disabled]="followId!==undefined" [(ngModel)]="planRemindTime" required placeholder="请选择下次提醒时间"
+                        pickerFormat="YYYY-MM-DD HH:mm" [min]="minTime" cancelText="取消" doneText="确定"></ion-datetime>
+                </button>
+                <info-input [ngClass]="{'invalid':(settingRecordForm.controls.nextContent?.touched || settingRecordForm.submitted) && settingRecordForm.controls.nextContent.invalid}"
+                    [disabled]="followId!==undefined" [(ngModel)]="remindContent"
+                    #infoInput (inputFoucs)="openInputPanel()" (inputBlur)="hideInputPanel()" name="nextContent" (voiceBarClick)="voiceBarClick()"></info-input>
+            </ion-item-group>
+        </ion-list>
+        <set-state [ngClass]="{'no-border':followId!==undefined&&postil}" [(ngModel)]="formData.followStatus" *ngIf="remind?.customerId" [disabled]="followId!==undefined" name="followStatus"></set-state>
+		<ion-list class="form-input-wrapper" *ngIf="followId!==undefined&&postil">
+			<ion-item-group class="follow-postil">
+				<info-input [ngClass]="{'invalid':(settingRecordForm.controls.comment?.touched || settingRecordForm.submitted) && settingRecordForm.controls.comment.invalid}" placeholder="点击输入批注,可使用输入法自带的语音进行输入" required
+                     [(ngModel)]="comment" name="comment"></info-input>
+			</ion-item-group>
+		</ion-list>
+        <div class="btn-wrapper">
+            <button *ngIf="followId===undefined" class="large" [disabled]="settingRecordForm.invalid" type="submit" ion-button block round (tap)="setting()">提交</button>
+			<button *ngIf="followId!==undefined&&postil" class="large" [disabled]="settingRecordForm.invalid" type="submit" ion-button block round (tap)="followPostil()">提交</button>
+        </div>
+    </form>
+    <ion-input-panel #inputPanel (textInput)="textInput()" (recordInput)="recordInput()" (recordEnd)="recordEnd($event)"></ion-input-panel>
+</ion-content>

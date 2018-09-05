@@ -1,0 +1,28 @@
+<ion-content [ngClass]="{'no-result':record.length===0}">
+    <ion-refresher (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content pullingIcon="arrow-round-down" pullingText="下拉刷新" refreshingText="刷新中..."></ion-refresher-content>
+    </ion-refresher>
+    <ion-list>
+        <ion-item class="record-item" *ngFor="let item of record">
+            <em class="top-line"></em>
+            <div class="record-content">
+                <h3>
+                    <div class="start">
+                        <span class="time">
+                            <em></em>
+                            <i>{{item?.operateTime | moment:'HH:mm'}}</i>
+                        </span>
+                        <span class="title">{{item?.type}}</span>
+                    </div>
+                    <span class="date">{{item?.operateTime | moment:'YYYY/MM/DD ddd'}}</span>
+                </h3>
+                <div class="record-info">
+                    <p class="operater">{{item?.operater?.name}}&nbsp;&nbsp;{{item?.content}}&nbsp;&nbsp;{{item?.type=='客户分配'?item?.assign?.name:''}}</p>
+                </div>
+            </div>
+        </ion-item>
+    </ion-list>
+    <ion-infinite-scroll (ionInfinite)="loadMore($event)" *ngIf="isHasNext">
+        <ion-infinite-scroll-content loadingText="加载更多..."></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+</ion-content>

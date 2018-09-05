@@ -1,0 +1,32 @@
+page-remind-postil {
+	.clientele-item {
+        background-color: #fff;
+        &.item {
+			// border-bottom: $border;
+            .item-inner {
+                border-bottom: none;
+            }
+        }
+    }
+	.remind-item {
+        
+    }
+	.postil-form{
+		margin-top: 1rem;
+	}
+	.item-wrapper {
+        .remind-item.item {
+            margin-top: 1rem;
+        background-color: #fff;
+        padding-bottom: 1.6rem;
+            .item-inner {
+                border-bottom: none;
+            }
+        }
+    }
+	.info-input-warpper{
+		.accessory{
+			display: none;
+		}
+	}
+}

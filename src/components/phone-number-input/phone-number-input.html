@@ -1,0 +1,30 @@
+<div class="phone-wrapper">
+    <form novalidate #phoneForm="ngForm" [ngClass]="{'added':addEd}" (ngSubmit)="add()">
+        <div class="phone-input-wrapper" [ngClass]="{'invalid':(phoneForm.controls['phone'+i]?.touched || addEd) && (phoneForm.controls['phone'+i]?.invalid || !valid[i])}"
+            *ngFor="let item of inputs;let i = index">
+            <div class="phone-input-container">
+                <div class="label">
+                    <i class="iconfont delete" (click)="delete(i)">&#xe66b;</i>
+                    <span>电话</span>
+                </div>
+                <input class="phone-input" [attr.data-index]="i" [name]="'phone'+i" type="tel" [(ngModel)]="values[i]" pattern="^[0-9]{6,13}$" required maxlength="13" minlength="6"
+                    (blur)="input($event)" placeholder="请输入电话号码">
+            </div>
+            <button ion-button icon-only clear hidden>
+                <i class="iconfont">
+                    &#xe66f;
+                </i>
+            </button>
+        </div>
+        <div class="phone-list fn-clear">
+            <button class="phone-item new fn-left" type="submit">
+                <i class="iconfont">&#xe679;</i>
+                <span>添加电话</span>
+            </button>
+            <p class="phone-item fn-left" *ngFor="let item of phonesNums;let i = index">
+                <i class="iconfont" (click)="delete(i)">&#xe66b;</i>
+                <span>{{item}}</span>
+            </p>
+        </div>
+    </form>
+</div>

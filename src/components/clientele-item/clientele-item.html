@@ -1,0 +1,63 @@
+<ion-item-sliding [ngClass]="{'no-push':noPush}">
+    <ion-item class="clientele-item" detail-push (click)="itemClick($event,data)">
+        <div class="progress" *ngIf="!showOnwer" [ngClass]="data.followStatus | followStatus:'class'">
+            <div class="left-wrapper">
+                <div class="line"></div>
+            </div>
+            <div class="right-wrapper">
+                <div class="line"></div>
+            </div>
+            <span class="state">
+                {{data.followStatus | followStatus:'state'}}
+            </span>
+        </div>
+		<div class="progress" *ngIf="showOnwer" [ngClass]="{over:'data.onwer'}">
+            <div class="left-wrapper">
+                <div class="line"></div>
+            </div>
+            <div class="right-wrapper">
+                <div class="line"></div>
+            </div>
+            <span class="state">
+                {{data?.onwer?.name}}
+            </span>
+        </div>
+        <div class="clientele-detail">
+            <h3 class="name">
+                <span>{{data.name}}</span>
+                <i class="main-tag" *ngIf="data.label">{{data.label}}</i>
+            </h3>
+            <p class="company">
+                <span class="post">{{data.post}}</span>
+                <span>{{data.company}}</span>
+            </p>
+			<div class="tag-container">
+                <i class="tag-item" *ngFor="let tag of data.labels">{{tag}}</i>
+            </div>
+        </div>
+        <ion-buttons item-end>
+            <button class="message" clear ion-button icon-only (click)="message($event,data.phone)">
+                <i class="iconfont">
+                    &#xe67e;
+                </i>
+            </button>
+            <button class="phone" clear ion-button icon-only (click)="phone($event)">
+                <i class="iconfont">
+                    &#xe67b;
+                </i>
+            </button>
+        </ion-buttons>
+    </ion-item>
+    <ion-item-options side="right" class="item-options">
+		<button ion-button color="primary" (click)="goAllot(data)">
+            分配
+        </button>
+        <button class="remind" color="warning" ion-button (click)="itemRemind(data)">
+            <span>设置</span>
+            <span>提醒</span>
+        </button>
+        <button ion-button color="danger" (click)="itemDelete(data)">
+            删除
+        </button>
+    </ion-item-options>
+</ion-item-sliding>

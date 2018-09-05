@@ -1,0 +1,45 @@
+page-user-info {
+    .main-wrapper {
+        position: relative;
+        .shade {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            background-color: rgba($color: #fff, $alpha: 0);
+            top: 0;
+        }
+        .list {
+            .item {
+                .item-inner {
+                    transition: background-position 0.5s;
+                    transition-timing-function: ease-in;
+                }
+                &.unactive {
+                    .item-inner {
+                        background-position: right -14px center;
+                    }
+                }
+            }
+        }
+        .header {
+            button {
+                height: rem(152);
+                background-color: #fff;
+                &.item {
+                    padding-left: 1rem;
+                }
+                ion-avatar {
+                    margin: 0;
+                    padding: 0;
+                    width: rem(142);
+                    height: rem(152);
+                    @include flex-center;
+                    img {
+                        width: rem(105);
+                        height: rem(105);
+                    }
+                }
+            }
+        }
+    }
+}

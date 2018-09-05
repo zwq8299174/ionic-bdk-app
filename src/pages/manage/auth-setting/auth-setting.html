@@ -1,0 +1,50 @@
+<ion-header>
+	<ion-navbar>
+		<ion-title>权限设置</ion-title>
+	</ion-navbar>
+</ion-header>
+<ion-content>
+	<ion-refresher (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content pullingIcon="arrow-round-down" pullingText="下拉刷新" refreshingText="刷新中..."></ion-refresher-content>
+    </ion-refresher>
+	<div class="no-result" *ngIf="auths.length==0&&currentPage!=1">
+        <div class="no-result-tag">
+            <img src="./assets/imgs/no-auth.png" />
+            <p>暂无权限设置</p>
+            <button class="add-auth" ion-button block round (tap)="add()">新增权限设置</button>
+        </div>
+    </div>
+	<ion-list class="auth-list">
+		<ion-item-sliding *ngFor="let item of auths;let $index = index">
+			<ion-item>
+				<ion-avatar item-start>
+					<span class="admin" [ngClass]="{'admin':item?.role?.name=='管理员'}">
+						{{item?.role?.name}}
+					</span>
+				</ion-avatar>
+				<div class="info">
+					<h2>{{item.name}}</h2>
+					<div class="tag-container">
+						<i *ngFor="let tag of item.labels">{{tag}}</i>
+					</div>
+				</div>
+			</ion-item>
+			<ion-item-options side="right">
+				<button ion-button color="primary" hidden>
+					分配
+				</button>
+				<button ion-button color="warning" (tap)="edit(item)">
+					修改
+				</button>
+				<button ion-button color="danger" (tap)="delete(item,$index)">
+					删除
+				</button>
+			</ion-item-options>
+		</ion-item-sliding>
+	</ion-list>
+	<button (tap)="add()" class="large" ion-button block round *ngIf="auths.length!=0">新建</button>
+	<p class="no-more" *ngIf="isHasNext&&auths.length!=0">没有更多了</p>
+    <ion-infinite-scroll (ionInfinite)="loadMore($event)" *ngIf="isHasNext">
+        <ion-infinite-scroll-content loadingText="加载更多..."></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+</ion-content>

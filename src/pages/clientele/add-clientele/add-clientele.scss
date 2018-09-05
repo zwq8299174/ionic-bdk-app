@@ -1,0 +1,15 @@
+page-add-clientele {
+	.state-wrapper{background-color: #fff;
+		.title{
+			line-height: rem(66);font-size:rem(30);padding:0 1rem;
+		}
+		.state-container{display: flex;justify-content: space-between;padding:rem(12) rem(30) rem(30) rem(30);
+			.state-item{
+				@include round-tag(large);
+			}
+		}
+	}
+	.list .item .note{
+		max-width: 60%;@extend .fn-text-overflow;
+	}
+}

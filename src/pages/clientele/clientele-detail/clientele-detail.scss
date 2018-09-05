@@ -1,0 +1,24 @@
+page-clientele-detail {
+	&>.content>.scroll-content{overflow: hidden;}
+	.clientele-item{background-color: #fff;
+	   &.item{
+            .item-inner{border-bottom: none;}
+        }
+	}
+	.header{
+		.toolbar{
+			.bar-button{min-width: 3rem;}
+		}
+	}
+	.record-tab-container{
+	    position: relative;margin-top: 1rem;height:calc(100% - 9rem);
+	    .tabs{
+	        .tabbar{padding:0 0.4rem;}
+	        .tab-button{
+	            border-bottom:2px solid #fff;@extend .transition-02;
+	        }
+	        .tab-button[aria-selected=true]{border-bottom-color: color($colors,primary);}
+	    }
+
+	}
+}

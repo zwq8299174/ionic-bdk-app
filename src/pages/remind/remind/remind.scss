@@ -1,0 +1,284 @@
+page-remind {
+	.header {
+        .toolbar {
+            position: relative;
+            z-index: 99;
+        }
+    }
+	&>.content{
+		&.no-result {
+			&:before {
+				height: rem(278);
+				width: rem(310);
+				@include flex-center();
+				padding-top: rem(200);
+				margin-top: rem(-278/2);
+				background: url('../assets/imgs/no-remind.png') no-repeat center 3rem;
+				background-size: rem(200);
+				content: '暂无提醒任务';
+				font-size: rem(30);
+				position: absolute;
+				z-index: 2;
+				left:50%;
+				top:50%;
+				margin-left: rem(-310/2);
+			}
+		}
+	}
+    ion-calendar{
+        padding:0;
+        .week-toolbar{
+            font-size: 1.4rem;
+            border-top: $border;
+            border-bottom: $border;
+            .week-title{
+                li {
+                    color: color($colors, light);
+                }
+            }
+        }
+        &.fold{
+            >.title{
+                display: none;
+            }
+            ion-calendar-month{
+                height: calc(0.5rem + 36px); overflow: hidden;
+            }
+        }
+        ion-calendar-month{
+            .days {
+                button.days-btn.marked{
+                    color: #333;position: relative;
+                    &::after{
+                        content: '';
+                        position:absolute;width: 0.4rem;height: 0.4rem;border-radius:50%;background: color($colors,danger);
+                        right:.5rem;
+                        top:.5rem;
+                    }
+                }
+            }
+        }
+    }
+    .fold-bar{background-color: #fff;
+        height: rem(40);@include flex-center();
+        .iconfont {
+            font-size: 1.4rem;
+        }
+    }
+	.date-now{
+		display: flex;align-items: center;color: #fff;padding-left: 1rem;font-size: rem(36);
+		.iconfont{font-size:2.4rem;color:#fff;}
+	}
+	.hint{position: fixed;width: rem(200);height:rem(40);line-height:rem(40);display: flex;justify-content: center;align-items: center;top:30px;left:0;z-index: 999;background-color: #000;border-radius: rem(20);color:#fff;}
+
+	.remind-list-container {
+	    @include flex-center();
+	    flex-wrap: wrap;
+        &>.scroll-content{overflow: hidden;background-color: transparent;z-index: 9;}
+        .scroll-container {background-color: transparent;
+            height: calc(100% - 301px - 2rem - 5rem);
+			&.clear-list{
+				height:100%;
+			}
+            &.no-result {
+                &:before {
+                    height: rem(278);
+                    width: rem(310);
+                    @include flex-center();
+                    padding-top: rem(200);
+                    background: url('../assets/imgs/no-remind.png') no-repeat center 3rem;
+                    background-size: rem(200);
+                    content: '暂无提醒任务';
+                    font-size: rem(30);
+                    margin-top: rem(200);
+                    position: absolute;
+                    z-index: 2;
+                    left:50%;
+                    margin-left: rem(-310/2);
+                }
+            }
+            .scroll-content {
+                margin-bottom: 0 !important;margin-top: 0;
+            }
+            .list {
+                margin-top: 0;
+                remind-item:first-child {
+                    .item {
+                        padding-top: 0;
+                        .top-line {
+                            display: none;
+                        }
+                    }
+                }
+            }
+        }
+        &.hide-tabs{
+            .scroll-container {
+                height: calc(100% - 5rem);
+            }
+        }
+        &.fold {
+            .scroll-container {
+                height: calc(100% - 88px - 2rem - 5rem);
+				&.clear-list{
+					height:100%;
+				}
+            }
+            &.hide-tabs {
+                .scroll-container {
+                    height: calc(100% - 88px - 2rem - 5rem - 5rem);
+					&.clear-list{
+						height:calc(100%  - 5rem);
+					}
+                }
+            }
+        }
+		.avtive-day-bar-wrapper{padding-top: 1rem;width: 100%;background-color:color($colors,bg);border-bottom:$border;
+			.avtive-day-bar{
+				background-color: #fff;width: 100%;
+				height: rem(80);display: flex;justify-content: space-between;align-items: center;padding:0 1rem;
+				.control{color:color($colors,light);display: flex;align-items: center;
+					.iconfont{font-size: 1.6rem;}
+	                &.disabled{
+	                    color:color($colors, gray);
+	                    .iconfont {
+	                        color: color($colors, gray);
+	                    }
+	                }
+				}
+				.avtive-day{font-size: 1.6rem;}
+			}
+		}
+	}
+	.add-remind{position: fixed;right: 1rem;bottom:8rem;border-radius:50%;width: rem(100);height:rem(100);@include flex-center;font-size:2.4rem;z-index: 99;box-shadow: 0 0 1rem rgba(0,0,0,0.3);@extend .transition-02;
+		&.draging{
+			transform: scale(1.1);
+		}
+	}
+	.bottom-bar {
+        z-index: 999;
+	    width: 100%;
+	    display: flex;
+	    height: rem(100);
+	    border-top: $border;
+	    justify-content: space-between;
+	    padding: rem(10) 0;
+	    position: absolute;
+	    bottom: 0;background-color:#fff;
+		div{width: 50%;@include flex-center();  font-size: rem(36);
+			.iconfont{font-size:3rem;margin-right: 1rem;}
+		}
+		.delete{color:color($colors,danger);border-right: $border;}
+		.check-all{
+			.iconfont{
+				width: rem(44);height: rem(44);border-radius: 50%;@include flex-center();
+				border: 2px solid color($colors,icon);font-size: 1.8rem;color:color($colors,icon);@extend .transition-02;
+			}
+			&.active{
+				.iconfont{
+					background-color: color($colors,warning);border-color:color($colors,warning);color:#fff;
+				}
+			}
+		}
+	}
+	.filter-bar-wrapper{
+		height: rem(84);
+		position: relative;
+		.filter-bar {
+			background-color: color($colors, bg);
+			height: rem(82);
+			display: flex;
+			padding: 1rem 0;
+			position: relative;
+			z-index: 10;
+			.filter-item {
+				width: calc(100% / 2);
+				@include flex-center();
+				border-right: $border;
+				position: relative;
+				.name {
+					font-size: rem(30);
+					@extend .transition-02;
+				}
+				.iconfont {
+					font-size: 1.2rem;
+					margin-left: 1rem;
+					@include flex-center();
+					height: 100%;
+					@extend .transition-02;
+				}
+				&.open {
+					color: color($colors, primary);
+					.iconfont {
+						transform: rotate(180deg);
+					}
+				}
+				&.active{
+					color: color($colors, primary);
+				}
+				&:last-child {
+					border-right: none;
+				}
+				.datetime,.select{
+					position: absolute;left: 0;width: 100%;height: 100%;opacity: 0;max-width: 100%;
+				}
+			}
+		}
+		&.filter-ios{
+			.filter-bar{
+				border-bottom: $border;
+			}
+		}
+		.filter-panel {
+			position: absolute;
+			width: 100%;
+			top: 100%;
+			background-color: #fff;
+			z-index: 9;
+			@extend .transition-35;
+			margin-top: -1px;
+			transform: translateY(-100%);
+			.panel-item {
+				display: none;
+				height: rem(80);
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				font-size: rem(30);
+				padding-left: rem(40);
+				padding-right: 1rem;
+				border-bottom: $border;
+				@extend .transition-02;
+				.iconfont {
+					display: none;
+				}
+				&:last-child {
+					border-bottom: none;
+				}
+				&.active {
+					color: color($colors, primary);
+					.iconfont {
+						display: block;
+						color: color($colors, primary);
+					}
+				}
+			}
+			&.show {
+				box-shadow: 0 6px 5px rgba(0, 0, 0, 0.05);
+				transform: translateY(0);
+			}
+		}
+		.filter-backdrop {
+			position: fixed;
+			height: 100%;
+			width: 100%;
+			background-color: #000;
+			opacity: 0;
+			@extend .transition-02;
+			z-index: 9;
+			&.in {
+				opacity: 0.3;
+			}
+		}
+	}
+}
